@@ -1,20 +1,22 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+//Importações de navegações e telas
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+//Importação de Páginas
+import Task from './pages/task_page';
+import AddEdit from './pages/add_edit_page';
+
+//Definição do Stack
+const Stack = createStackNavigator();
+
+//Função principal e tela principal
+export default function App(){
+  return(
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName='Task'>
+        
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
