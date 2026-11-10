@@ -132,13 +132,42 @@ export default function({navigation}){
             {/*Ocultar tarefas finalizadas*/}
             <View style = {{
                 flexDirection: 'row',
-                justifyContent: 'center',
+                justifyContent: 'flex-end',
                 alignItems: 'center',
                 marginTop: 15,
                 marginBottom: 10,
                 marginRight: 10
             }}>
+                <Switch
+                    value = {hideFinished}
+                    onValueChange = {setHideFinished}
+                    thumbColor = {hideFinished ? '#4CAF50' : '#EF5350'}
+                    trackColor = {hideFinished ? '#4CAF50' : '#EF5350'}
+                />
+                <Text style = {{marginLeft: 10}}>Ocultar finalizadas</Text>
+            </View>
 
+            {/*Selecione o tipo de ordenação */}
+            <View style = {{
+                flexDirection: 'row',
+                justifyContent: 'flex-end',
+                alignItems: 'center',
+                marginTop: 15,
+                marginBottom: 10,
+                marginRight: 10
+            }}>
+                <Text style = {{fontWeight: fontWeight.bold}}>
+                    Ordenar por:
+                </Text>
+
+                <Picker
+                    value = {sortOption}
+                    onValueChange = {setSortOption}
+                    style = {{width: 150}}
+                >
+                    <Picker.Item label = 'Data' value = 'date'/>
+                    <Picker.Item label = 'Prioridade' value = 'priority'/>
+                </Picker>
             </View>
         </View>
     );
