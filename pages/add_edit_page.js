@@ -11,6 +11,7 @@ import styles from '../styles/styles_add_edit';
 
 //Função principal (Criar e Editar tarefa)
 export default function AddEdit({navigation, route}){
+
     return(
         <View style = {styles.container}>
             

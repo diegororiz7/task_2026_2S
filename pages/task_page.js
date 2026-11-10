@@ -156,7 +156,7 @@ export default function({navigation}){
                 marginBottom: 10,
                 marginRight: 10
             }}>
-                <Text style = {{fontWeight: fontWeight.bold}}>
+                <Text style = {{fontWeight: 'bold', marginRight: 10}}>
                     Ordenar por:
                 </Text>
 
@@ -169,6 +169,143 @@ export default function({navigation}){
                     <Picker.Item label = 'Prioridade' value = 'priority'/>
                 </Picker>
             </View>
+
+            {/*Buscar tarefas*/}
+            <View style = {{
+                flexDirection: 'row',
+                alignItems: 'center',
+                backgroundColor: '#f0f0f0f0',
+                borderRadius: 8,
+                marginHorizontal: 10,
+                marginBottom: 10,
+                paddingHorizontal: 10
+            }}>
+                <FontAwesome
+                    name = 'search'
+                    size = {18}
+                    color = '#000'
+                />
+
+                <TextInput
+                    value = {searchText}
+                    onChangeText = {setSeacrhText}
+                    style = {styles.searchInput}
+                    placeholder = 'Informe uma tarefa'
+                />
+            </View>
+
+            {/*Listagem de Tarefas */}
+            <FlatList
+                data = {filteredTask}
+                keyExtractor = {(item) => item.id}
+                renderItem = {({item}) => (
+                    <View style = {styles.contextAllTasks}>
+                        <View style = {{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            gap: 6
+                        }}>
+                            <Text style = {[
+                                styles.desciptionTask,
+                                item.finished && {
+                                    textDecorationLine: 'line-through'
+                                }
+                            ]}>
+                                {item.description}
+                            </Text>
+
+                            <Text style = {{
+                                backgroundColor: getPriorityColor(item.priority),
+                                color: '#fff',
+                                paddingHorizontal: 6,
+                                borderRadius: 4
+                            }}>
+                                {item.priority}
+                            </Text>
+
+                            <Text>
+                                {item.date ? 
+                                    formatDate(item.date) : ''
+                                }
+                            </Text>
+                        </View>
+
+                        {/*Botões de ações das tarefas */}
+                        <View style = {{flexDirection: 'row'}}>
+                            {/*Botão de curtir */}
+                            <TouchableOpacity
+                                style = {{marginRight: 10, alignItems: 'center'}}
+                                onPress = {() => handleLike(item.id, item.likes)}
+                            >   
+                                <FontAwesome
+                                    name = 'thumbs-up'
+                                    size = {20}
+                                    color = '#007BFF'
+                                />
+                                <Text style = {{fontSize: 12, marginLeft: 2}}>
+                                    {item.likes || 0}
+                                </Text>
+                            </TouchableOpacity>
+
+                            {/*Botão de curtir */}
+                            <TouchableOpacity
+                                style = {{marginRight: 10, alignItems: 'center'}}
+                                onPress = {() => handleDeslike(item.id, item.deslikes)}
+                            >   
+                                <FontAwesome
+                                    name = 'thumbs-down'
+                                    size = {20}
+                                    color = '#FF0000'
+                                />
+                                <Text style = {{fontSize: 12, marginLeft: 2}}>
+                                    {item.deslikes || 0}
+                                </Text>
+                            </TouchableOpacity>
+
+                            {/*Botão de finalizar tarefa */}
+                            <TouchableOpacity
+                                style = {{marginRight: 10, alignItems: 'center'}}
+                                onPress = {() => toggleTaskStatus(item.id, item.finished)}
+                            >
+                                <FontAwesome
+                                    name = {item.finished ? 'undo' : 'check'}
+                                    size = {20}
+                                    color = {item.finished ? '#4CA': '#4CAF50'}
+                                />
+                            </TouchableOpacity>
+
+                            {/*Botões de editar tarefa*/}
+                            <TouchableOpacity
+                                style = {{marginRight: 10, alignItems: 'center'}}
+                                onPress = {() => navigation.navigate('AddEdit', {
+                                    id: item.id,
+                                    description: item.description,
+                                    priority: item.priority,
+                                    date: item.date
+                                })}
+                            >
+                                <FontAwesome
+                                    name = 'edit'
+                                    size = {20}
+                                    color = '#9C27B0'
+                                />
+                            </TouchableOpacity>
+
+                            {/*Botões de excluir tarefa*/}
+                            <TouchableOpacity
+                                style = {{marginRight: 10, alignItems: 'center'}}
+                                onPress = {() => confirmDeleteTask(item.id)}
+                            >
+                                <FontAwesome
+                                    name = 'trash'
+                                    size = {20}
+                                    color = '#D32F2F'
+                                />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                )}
+            />
         </View>
     );
 }
