@@ -169,6 +169,17 @@ export default function AddEdit({navigation, route}){
                     }
                 </>
             )}
+
+            <TouchableOpacity
+                style = {styles.buttonNewTask}
+                onPress = {handleSave}
+            >
+                <FontAwesome
+                    name = {isEdit ? 'edit' : 'save'}
+                    size = {20}
+                    color = '#FFF'
+                />
+            </TouchableOpacity>
         </View>
     );
 }
