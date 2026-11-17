@@ -13,7 +13,7 @@ export default function({navigation}){
 
     //Variáveis iniciais
     const [task, setTask] = useState([]);
-    const [showDeleteMotal, setShowDeleteModal] = useState(false);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [taskToDelete, setTaskToDelete] = useState(null);
     const [hideFinished, setHideFinished] = useState(false);
     const [filteredTask, setFilteredTask] = useState([]);
@@ -306,6 +306,50 @@ export default function({navigation}){
                     </View>
                 )}
             />
+
+            {/*Botão de incluir tarefa*/}
+            <TouchableOpacity
+                style = {styles.buttonNewTask}
+                onPress = {() => navigation.navigate('AddEdit')}
+            >
+                <FontAwesome
+                    name = 'plus'
+                    size = {20}
+                    color = '#FFF'
+                />
+            </TouchableOpacity>
+
+            {/* Modal de exclusão */}
+            <Modal
+                transparent
+                visible = {showDeleteModal}
+            >
+                <View style = {styles.overlay}>
+                    <View style = {styles.modalContent}>
+                        <Text>Deseja realmente excluir a tarefa?</Text>
+                        <View style = {styles.buttonContainer}>
+                            <TouchableOpacity
+                                style = {[
+                                    styles.button,
+                                    {backgroundColor: '#4CAF50', width: '45%'}
+                                ]}
+                                onPress = {deleteTask}
+                            >
+                                <Text style = {styles.buttonText}>Sim</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style = {[
+                                    styles.button,
+                                    {backgroundColor: '#D32F2F', width: '45%'}
+                                ]}
+                                onPress = {cancelDelete}
+                            >
+                                <Text style = {styles.buttonText}>Não</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </View>
+            </Modal>
         </View>
     );
 }
